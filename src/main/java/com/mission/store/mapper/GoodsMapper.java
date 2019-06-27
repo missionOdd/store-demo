@@ -14,7 +14,13 @@ public interface GoodsMapper {
 	 * @return 热销商品列表
 	 */
 	List<Goods> findHotGoods();
-	
+
+
+	/**
+	 * 获取新增商品列表
+	 * @return 热销商品列表
+	 */
+	List<Goods> findNewGoods();
 	/**
 	 * 根据id查询商品详情
 	 * @param id 商品的id

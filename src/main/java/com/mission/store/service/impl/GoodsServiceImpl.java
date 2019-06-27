@@ -23,6 +23,11 @@ public class GoodsServiceImpl implements IGoodsService {
 	}
 
 	@Override
+	public List<Goods> getNewGoods() {
+		return goodsMapper.findNewGoods();
+	}
+
+	@Override
 	public Goods getById(Long id) {
 		return findById(id);
 	}

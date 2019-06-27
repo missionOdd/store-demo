@@ -15,7 +15,13 @@ public interface IGoodsService {
 	 * @return 热销商品列表
 	 */
 	List<Goods> getHotGoods();
-	
+
+	/**
+	 * 获取新增商品列表
+	 * @return 新增商品列表
+	 */
+	List<Goods> getNewGoods();
+
 	/**
 	 * 根据id查询商品详情
 	 * @param id 商品的id

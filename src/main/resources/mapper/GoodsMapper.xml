@@ -34,7 +34,21 @@
 		WHERE 
 			id=#{id}
 	</select>
-	
+
+
+	<select id="findNewGoods" resultType="com.mission.store.entity.Goods">
+		SELECT
+			id, title, price, image
+		FROM
+			t_goods
+		WHERE
+			status=1 AND num>10
+		ORDER BY
+			created_time DESC
+		LIMIT
+			0,4
+	</select>
+
 </mapper>
 
 

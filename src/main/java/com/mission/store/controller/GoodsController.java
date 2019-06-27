@@ -25,6 +25,14 @@ public class GoodsController extends BaseController {
 		// 返回
 		return new ResponseResult<>(SUCCESS, data);
 	}
+
+	@GetMapping("/new")
+	public ResponseResult<List<Goods>> getNewGoods() {
+		// 获取数据
+		List<Goods> data = goodsService.getNewGoods();
+		// 返回
+		return new ResponseResult<>(SUCCESS, data);
+	}
 	
 	@GetMapping("/{id}/details")
 	public ResponseResult<Goods> getById(

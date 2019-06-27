@@ -309,6 +309,7 @@
 	<script type="text/javascript">
 	$(document).ready(function(){
 		showHotGoods();
+		showNewGoods();
 	});
 	
 	function showHotGoods() {
@@ -327,13 +328,46 @@
 							+ '<div class="col-md-2">¥#{price}</div>'
 							+ '<div class="col-md-3"><img src="..#{image}collect.png" width="100%" /></div>'
 							+ '</div>';
-								
+
 						html = html.replace(/#{id}/g, list[i].id);
 						html = html.replace(/#{title}/g, list[i].title);
 						html = html.replace(/#{price}/g, list[i].price);
 					 	html = html.replace(/#{image}/g, list[i].image);
 								
 						$("#hot-goods-list").append(html);
+					}
+				} else {
+					alert(json.message);
+				}
+			}
+		});
+	}
+
+
+
+	function showNewGoods() {
+		$.ajax({
+			"url":"/goods/new",
+			"type":"GET",
+			"dataType":"json",
+			"success":function(json) {
+				if (json.state == 200) {
+					var list = json.data;
+					$("#new-goods-list").empty();
+					for (var i = 0; i < list.length; i++) {
+						console.log(list[i].title);
+						var html = '<div class="col-md-12">'
+								+ '<div class="col-md-7 text-row-2"><a href="product.html?id=#{id}">#{title}</a></div>'
+								+ '<div class="col-md-2">¥#{price}</div>'
+								+ '<div class="col-md-3"><img src="..#{image}collect.png" width="100%" /></div>'
+								+ '</div>';
+
+						html = html.replace(/#{id}/g, list[i].id);
+						html = html.replace(/#{title}/g, list[i].title);
+						html = html.replace(/#{price}/g, list[i].price);
+						html = html.replace(/#{image}/g, list[i].image);
+
+						$("#new-goods-list").append(html);
 					}
 				} else {
 					alert(json.message);
