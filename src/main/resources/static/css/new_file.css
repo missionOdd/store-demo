@@ -1,0 +1,56 @@
+#div01 /*#开始id样式*/
+{
+	width: 100%;/*宽*/
+	height: 900px;/*高*/
+	/*边框*/
+}
+
+#div0101 /*#开始id样式*/
+{
+	width: 100%;/*宽*/
+	height: 150px;/*高*/
+	/*边框*/
+}
+/*中间的div*/
+#div0102 /*#开始id样式*/
+{
+	width: 100%;/*宽*/
+	height: 70%;/*高*/
+	/*边框*/
+	background-image: url(../img/bg1.jpg);
+	/*背景图片不 铺*/
+	background-repeat:no-repeat;
+	/*背景图片大小 前面100宽度 后面100高度*/
+	background-size: 100% 100%;
+}
+
+#div010101 /*顶部左边01*/
+{
+	width: 25%;/*宽*/
+	height: 100%;/*高*/
+	/*边框*/
+	background-image:url(../img/stumalllogo.png);
+	/*背景图片不 铺*/
+	background-repeat:no-repeat;
+	/*背景图片大小 前面100宽度 后面100高度*/
+	background-size: 100% 100%;
+	float: left;
+}
+
+#div010102 /*顶部中间*/
+{
+	width: 49%;/*宽*/
+	height: 100%;/*高*/
+	/*边框*/
+	float: left;/*浮动靠左*/
+}
+#div010103 /*顶部右边*/
+{
+	width: 25%;/*宽*/
+	height: 100%;/*高*/
+	/*边框*/
+	
+	float: left;/*浮动靠左*/
+	text-align: right;/*文字靠右*/
+	line-height: 150px;/*行高*/
+}
