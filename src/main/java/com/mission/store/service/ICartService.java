@@ -43,8 +43,9 @@ public interface ICartService {
 	 * @param uid 用户的id
 	 * @return 用户的购物车数据列表
 	 */
-	List<CartVO> getByUid(Integer uid);
-	
+	List<CartVO> getByUid(Integer uid,Integer index);
+
+	Integer countByUid(Integer uid);
 	/**
 	 * 获取指定的某些id的购物车数据列表
 	 * @param cids 指定的一系列购物车数据id

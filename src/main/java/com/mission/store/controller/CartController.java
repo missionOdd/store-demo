@@ -53,13 +53,16 @@ public class CartController extends BaseController {
 	
 	@GetMapping("/")
 	public ResponseResult<List<CartVO>> getByUid(
-		HttpSession session) {
+		HttpSession session,Integer page) {
 		// 从session中获取uid
 		Integer uid = getUidFromSession(session);
 		// 执行：service.addToCart(username, cart);
-		List<CartVO> data = cartService.getByUid(uid);
+		List<CartVO> data = cartService.getByUid(uid,page-1);
+		Integer count=cartService.countByUid(uid);
+		ResponseResult<List<CartVO>> result = new ResponseResult<>(SUCCESS, data);
+		result.setCount(count);
 		// 返回
-		return new ResponseResult<>(SUCCESS, data);
+		return result;
 	}
 	
 	@GetMapping("/checked_list")
@@ -67,6 +70,7 @@ public class CartController extends BaseController {
 			Integer[] cids) {
 		// 执行
 		List<CartVO> data = cartService.getByCids(cids);
+
 		// 返回
 		return new ResponseResult<>(SUCCESS, data);
 	}

@@ -11,6 +11,7 @@ public class ResponseResult<T> implements Serializable {
 	private static final long serialVersionUID = -5368505763231357265L;
 
 	private Integer state;
+	private Integer count;
 	private String message;
 	private T data;
 
@@ -35,6 +36,14 @@ public class ResponseResult<T> implements Serializable {
 
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public final Integer getCount() {
+		return count;
+	}
+
+	public final void setCount(Integer count) {
+		this.count = count;
 	}
 
 	public String getMessage() {

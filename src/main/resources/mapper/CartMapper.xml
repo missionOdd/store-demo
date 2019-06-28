@@ -80,6 +80,7 @@
 			uid=#{uid}
 		ORDER BY 
 			t_cart.modified_time DESC, cid DESC
+		LIMIT #{index},5
 	</select>
 	
 	<!-- 获取指定的某些id的购物车数据列表 -->
@@ -107,7 +108,19 @@
 		ORDER BY 
 			t_cart.modified_time DESC, cid DESC
 	</select>
-	
+	<select id="countByUid" resultType="java.lang.Integer">
+		SELECT
+			count(*)
+		FROM
+			t_cart
+				LEFT JOIN
+			t_goods
+			ON
+				t_cart.gid=t_goods.id
+		WHERE
+			uid=#{uid}
+	</select>
+
 </mapper>
 
 

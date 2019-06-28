@@ -10,6 +10,9 @@
 		<link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
 		<script src="../bootstrap3/jquery-1.9.1.min.js"></script>
 		<script src="../bootstrap3/js/bootstrap.js"></script>
+		<script src="../js/getParams.js"></script>
+		<script src="../bootstrap3/js/bootstrap-paginator.js"></script>
+
 		<!-- 字体图标 -->
 		<link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
 		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
@@ -101,7 +104,7 @@
 					<h3 class="panel-title"><span class="fa fa-shopping-cart"></span> 购物车</h3>
 				</div>
 				<div class="panel-body">
-					<form action="orderConfirm.html" role="form">
+					<form action="orderConfirm.html" style="text-align: center;" role="form">
 						<!--购物车表格开始-->
 						<table class="cart-table" width="100%">
 							<thead>
@@ -160,12 +163,12 @@
 										<input class="num-btn" type="button" value="+" onclick="addNum(3)" />
 									</td>
 									<td><span  id="goodsCast3"></span></td>
-									<td><input type="button" onclick="delCartItem(this)" class="cart-del btn btn-default btn-xs" value="删除"/></td>
+									<td><input type="button" onclick="delCartItem(this)" class="cart-del btn btn-default btn-xs"  value="删除"/></td>
 								</tr>
 							</tbody>
 						</table>
 						<div class="total-bar">
-							<a href="javascript:selDelCart()" class="cart-del-sel btn btn-default btn-xs">删除所选商品</a>
+							<a href="javascript:selDelCart()" style="display: table;" class="cart-del-sel btn btn-default btn-xs">删除所选商品</a>
 							<span class="pull-right">已选商品
 								<span id="selectCount">0</span>件 总价¥
 							<span id="selectTotal">0</span>元
@@ -173,12 +176,14 @@
 							</span>
 
 						</div>
+
+
 						<div>
 							<span class="pull-right">
 								<input type="submit" value="  结  算  " class="btn btn-primary btn-lg link-account" />
 							</span>
 						</div>
-
+						<div class="pagination-wrap" style="margin: 0px auto" id="pagehtml"></div>
 					</form>
 				</div>
 			</div>
@@ -263,7 +268,11 @@
 		</footer>
 		<!--页脚结束-->
 	<script type="text/javascript">
+		var  page=1;
 	$(document).ready(function() {
+		if ($.query.get("page")) {
+			page = $.query.get("page");
+		}
 		showCartList();
 	});
 	
@@ -271,6 +280,7 @@
 		$.ajax({
 			"url":"/carts/",
 			"type":"GET",
+			"data":"page="+page,
 			"dataType":"json",
 			"success":function(json) {
 				if (json.state == 200) {
@@ -301,13 +311,31 @@
 								
 						$("#cart-list").append(html);
 					}
+
+					var options={
+						bootstrapMajorVersion:1, //版本
+						currentPage:page, //当前页数
+						numberOfPages:5, //最多显示Page页
+						totalPages:json.count, //所有数据可以显示的页数
+						onPageClicked:function(e,originalEvent,type,page){
+							console.log("e");
+							console.log(e);
+							console.log("originalEvent");
+							console.log(originalEvent);
+							console.log("type");
+							console.log(type);
+							console.log("page");
+							console.log(page);
+							replaceParamVal("page",page);
+						},
+					}
+					$("#pagehtml").bootstrapPaginator(options);
 				} else {
 					alert(json.message);
 				}
 			}
 		});
 	}
-	
 	function addNum(cid) {
 		$.ajax({
 			"url":"/carts/" + cid + "/add_num",
@@ -330,6 +358,15 @@
 			}
 		});
 	}
+
+
+		function replaceParamVal(paramName,replaceWith) {
+			var oUrl = this.location.href.toString();
+			var re=eval('/('+ paramName+'=)([^&]*)/gi');
+			var nUrl = oUrl.replace(re,paramName+'='+replaceWith);
+			this.location = nUrl;
+			window.location.href=nUrl
+		}
 	</script>
 	</body>
 

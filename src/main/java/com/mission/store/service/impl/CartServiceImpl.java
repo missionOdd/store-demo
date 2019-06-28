@@ -77,8 +77,13 @@ public class CartServiceImpl implements ICartService {
 	}
 
 	@Override
-	public List<CartVO> getByUid(Integer uid) {
-		return findByUid(uid);
+	public List<CartVO> getByUid(Integer uid,Integer index) {
+		return findByUid(uid,index);
+	}
+
+	@Override
+	public Integer countByUid(Integer uid) {
+		return cartMapper.countByUid(uid);
 	}
 
 	@Override
@@ -138,8 +143,8 @@ public class CartServiceImpl implements ICartService {
 	 * @param uid 用户的id
 	 * @return 用户的购物车数据列表
 	 */
-	private List<CartVO> findByUid(Integer uid) {
-		return cartMapper.findByUid(uid);
+	private List<CartVO> findByUid(Integer uid,Integer index) {
+		return cartMapper.findByUid(uid,index);
 	}
 
 	/**
