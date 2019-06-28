@@ -18,10 +18,16 @@ $(function() {
 			$(".img-big[data='" + n + "']").show();
 
 		})
+
+	var price;
 		//购物数量加1
 	$("#numUp").click(function() {
 		var n = parseInt($("#num").val());
 		$("#num").val(n + 1);
+		price=$("#price").val();
+		var num= $("#num").val();
+		console.log(num);
+		$("#goods-price").html(parseFloat(price)*parseFloat(num));
 	})
 
 	//购物数量-1
@@ -31,6 +37,11 @@ $(function() {
 			return;
 		}
 		$("#num").val(n - 1);
+
+		price=$("#price").val();
+		var num= $("#num").val();
+		console.log(num);
+		$("#goods-price").html(parseFloat(price)*parseFloat(num));
 	})
 
 	//点购物车跳页面

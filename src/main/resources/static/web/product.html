@@ -141,6 +141,7 @@
 				<h3 id="goods-title" class="col-md-12 title-row-1">戴尔Dell 燃700R1605银色</h3>
 				<h4 class="col-md-12 text-row-1"><small id="goods-sell-point">仅上海，广州，沈阳仓有货！预购从速！</small></h4>
 				<div class="col-md-12 price-bar">
+					<input type="hidden" id="price"/>
 					<small>学员售价：</small> ¥<span id="goods-price">4899</span>.00
 					<div><small>*退货补运费 *7天无理由退货 *24小时快速退款 </small></div>
 				</div>
@@ -149,7 +150,7 @@
 						<label for="num">数量：</label>
 						<input id="numDown" type="button" value="-" class="num-btn" />
 						<input id="num" type="text" size="2" readonly="readonly" class="num-text" value="1">
-						<input id="numUp"class="num-btn" type="button" value="+" />
+						<input id="numUp" class="num-btn" type="button" value="+" />
 					</div>
 					<div class="col-md-12 form-space">
 						<h4><small><b>学子商城</b>发货并提供售后服务,今日下单,明日送达</small></h4>
@@ -318,7 +319,6 @@
 		<!--页脚结束-->
 	<script type="text/javascript">
 	var id;
-	
 	$(document).ready(function(){
 		id = $.query.get("id");
 		console.log("id=" + id);
@@ -333,7 +333,7 @@
 					$("#goods-title").html(json.data.title);
 					$("#goods-price").html(json.data.price);
 					$("#goods-sell-point").html(json.data.sellPoint);
-					
+					$("#price").val(json.data.price);
 					$("#goods-image-1-big").attr("src", ".." + json.data.image + "1_big.png");
 					$("#goods-image-2-big").attr("src", ".." + json.data.image + "2_big.png");
 					$("#goods-image-3-big").attr("src", ".." + json.data.image + "3_big.png");
@@ -371,6 +371,8 @@
 			}
 		});
 	});
+
+
 	</script>
 	</body>
 
