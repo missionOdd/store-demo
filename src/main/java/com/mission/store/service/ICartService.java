@@ -37,7 +37,10 @@ public interface ICartService {
 	void addNum(Integer uid, String username, Integer cid)
 			throws CartNotFoundException,
 			AccessDeniedException, UpdateException;
-	
+
+	 void subNum(Integer uid, String username, Integer cid)
+			throws CartNotFoundException,
+			AccessDeniedException, UpdateException;
 	/**
 	 * 获取某用户的购物车数据列表
 	 * @param uid 用户的id

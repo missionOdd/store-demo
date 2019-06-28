@@ -80,7 +80,7 @@
 			uid=#{uid}
 		ORDER BY 
 			t_cart.modified_time DESC, cid DESC
-		LIMIT #{index},5
+		LIMIT #{index},4
 	</select>
 	
 	<!-- 获取指定的某些id的购物车数据列表 -->

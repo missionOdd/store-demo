@@ -272,9 +272,22 @@
 	$(document).ready(function() {
 		if ($.query.get("page")) {
 			page = $.query.get("page");
+		}else {
+			insertParam("page",1);
 		}
 		showCartList();
+		selectGoods();
 	});
+	function selectGoods(){
+		$('.ckitem').change(function () {
+			console.log($(this).val()+"被选中")
+			var id=$(this).val();
+			var count=$(".ckitem").find("option:selected").size();
+			$('.selectCount').text(count);
+		});
+	}
+
+	
 	
 	function showCartList() {
 		$.ajax({
@@ -294,7 +307,7 @@
 							+ '<td>#{title}</td>'
 							+ '<td>¥<span id="price-#{cid}">#{price}</span></td>'
 							+ '<td>'
-							+ '<input type="button" value="-" class="num-btn" onclick="reduceNum(1)" />'
+							+ '<input type="button" value="-" class="num-btn" onclick="subNum(#{cid})" />'
 							+ '<input id="num-#{cid}" type="text" size="2" readonly="readonly" class="num-text" value="#{num}">'
 							+ '<input class="num-btn" type="button" value="+" onclick="addNum(#{cid})" />'
 							+ '</td>'
@@ -311,12 +324,14 @@
 								
 						$("#cart-list").append(html);
 					}
+					var  totalPage=Math.ceil(parseFloat(json.count)/4.0);
 
+					console.log("totalPage"+totalPage)
 					var options={
 						bootstrapMajorVersion:1, //版本
 						currentPage:page, //当前页数
 						numberOfPages:5, //最多显示Page页
-						totalPages:json.count, //所有数据可以显示的页数
+						totalPages:totalPage, //所有数据可以显示的页数
 						onPageClicked:function(e,originalEvent,type,page){
 							console.log("e");
 							console.log(e);
@@ -359,14 +374,32 @@
 		});
 	}
 
-
-		function replaceParamVal(paramName,replaceWith) {
-			var oUrl = this.location.href.toString();
-			var re=eval('/('+ paramName+'=)([^&]*)/gi');
-			var nUrl = oUrl.replace(re,paramName+'='+replaceWith);
-			this.location = nUrl;
-			window.location.href=nUrl
+		function subNum(cid) {
+			$.ajax({
+				"url":"/carts/" + cid + "/sub_num",
+				"type":"POST",
+				"dataType":"json",
+				"success":function(json) {
+					if (json.state == 200) {
+						// showCartList();
+						var n = parseInt($("#num-" + cid).val()) - 1;
+						$("#num-" + cid).val(n);
+						var tp = parseInt($("#price-" + cid).html()) * n;
+						$("#total-price-" + cid).html(tp);
+					} else {
+						alert(json.message);
+					}
+				},
+				"error":function() {
+					alert("您的登录信息已经过期，请重新登录！");
+					location.href = "login.html";
+				}
+			});
 		}
+
+
+
+
 	</script>
 	</body>
 

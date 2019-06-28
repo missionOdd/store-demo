@@ -77,6 +77,34 @@ public class CartServiceImpl implements ICartService {
 	}
 
 	@Override
+	public void subNum(Integer uid, String username, Integer cid)
+			throws CartNotFoundException, AccessDeniedException, UpdateException {
+		// 根据参数cid查询数据：findByCid(cid)
+		Cart result = findByCid(cid);
+		// 判断查询结果是否为null
+		if (result == null) {
+			// 是：CartNotFoundException
+			throw new CartNotFoundException(
+					"增加商品数量错误！尝试访问的数据不存在！");
+		}
+
+		// 判断查询结果中的uid与当前登录的用户id(参数uid)是否不一致
+		if (!result.getUid().equals(uid)) {
+			// 是：AccessDeniedException
+			throw new CartNotFoundException(
+					"增加商品数量错误！数据归属错误！");
+		}
+
+		// 暂不实现：判断商品的状态、库存等，即某商品是否可以存在于购物车中
+
+		// 将查询结果中的商品数量加1
+		Integer num = result.getNum() - 1;
+		// 执行更新：updateNum(cid, num, modifiedUser, modifiedTime)
+		Date now = new Date();
+		updateNum(cid, num, username, now);
+	}
+
+	@Override
 	public List<CartVO> getByUid(Integer uid,Integer index) {
 		return findByUid(uid,index);
 	}

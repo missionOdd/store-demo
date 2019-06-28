@@ -2,6 +2,7 @@ package com.mission.store.controller;
 
 import com.mission.store.entity.Cart;
 import com.mission.store.service.ICartService;
+import com.mission.store.util.CalcPage;
 import com.mission.store.util.ResponseResult;
 import com.mission.store.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,14 +51,29 @@ public class CartController extends BaseController {
 	    // 返回
 		return new ResponseResult<>(SUCCESS);
 	}
-	
+
+	@RequestMapping("/{id}/sub_num")
+	public ResponseResult<Void> subNum(
+			@PathVariable("id") Integer cid,
+			HttpSession session) {
+		// 从session中获取uid和username
+		Integer uid = getUidFromSession(session);
+		String username = session.getAttribute("username").toString();
+		// 执行
+		cartService.subNum(uid, username, cid);
+		// 返回
+		return new ResponseResult<>(SUCCESS);
+	}
+
+
 	@GetMapping("/")
 	public ResponseResult<List<CartVO>> getByUid(
 		HttpSession session,Integer page) {
 		// 从session中获取uid
 		Integer uid = getUidFromSession(session);
 		// 执行：service.addToCart(username, cart);
-		List<CartVO> data = cartService.getByUid(uid,page-1);
+		Integer index = CalcPage.getIndex(page, 4);
+		List<CartVO> data = cartService.getByUid(uid,index);
 		Integer count=cartService.countByUid(uid);
 		ResponseResult<List<CartVO>> result = new ResponseResult<>(SUCCESS, data);
 		result.setCount(count);
