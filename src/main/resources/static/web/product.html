@@ -166,7 +166,7 @@
 
 						<button id="btn-add" type="button" class="btn btn-default"><span class="fa fa-cart-plus"></span> 加入购物车</button>
 
-						<button type="button" class="btn btn-default"><span class="fa fa-heart-o"></span> 加入收藏</button>
+						<button id="collection-add" type="button" class="btn btn-default"><span class="fa fa-heart-o"></span> 加入收藏</button>
 
 					</div>
 				</form>
@@ -373,6 +373,25 @@
 	});
 
 
+	$("#collection-add").click(function(){
+		$.ajax({
+			"url":"/collection/add",
+			"data":"gid=" + id ,
+			"type":"POST",
+			"dataType":"json",
+			"success":function(json) {
+				if (json.state == 200) {
+					alert("添加成功！");
+				} else {
+					alert(json.message);
+				}
+			},
+			"error":function() {
+				alert("您还没有登录，或登录信息已经过期，请重新登录！");
+				location.href = "login.html";
+			}
+		});
+	});
 	</script>
 	</body>
 

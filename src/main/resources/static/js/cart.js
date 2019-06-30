@@ -16,13 +16,13 @@ function reduceNum(rid) {
 /*全选全不选*/
 function checkall(ckbtn) {
 	$(".ckitem").prop("checked", $(ckbtn).prop("checked"));
-	//calcTotal();
+	calcTotal();
 }
 //删除按钮
 function delCartItem(btn) {
 	
 	$(btn).parents("tr").remove();
-	//calcTotal();
+	calcTotal();
 }
 //批量删除按钮
 function selDelCart() {
@@ -34,23 +34,17 @@ function selDelCart() {
 			$($(".ckitem")[i]).parents("tr").remove();
 		}
 	}
-	//calcTotal();
+	calcTotal();
 }
 $(function() {
 
-
-
-	//单选一个也得算价格
-	$(".ckitem").click(function() {
-			//calcTotal();
-		})
-		//开始时计算价格
-		//calcTotal();
-
-
-
-
 })
+
+
+function selectGoods() {
+	//开始时计算价格
+	calcTotal();
+}
 
 //计算单行小计价格的方法
 function calcRow(rid) {
@@ -68,7 +62,7 @@ function calcRow(rid) {
 }
 
 //计算总价格的方法
-/*
+
 function calcTotal() {
 	//选中商品的数量
 	var vselectCount = 0;
@@ -102,4 +96,130 @@ function calcTotal() {
 		$("#selectCount").html(vselectCount);
 	}
 
-}*/
+}
+
+
+
+var  page=1;
+$(document).ready(function() {
+	if ($.query.get("page")) {
+		page = $.query.get("page");
+	}else {
+		insertParam("page",1);
+	}
+	showCartList();
+	selectGoods();
+});
+
+
+
+
+function showCartList() {
+	$.ajax({
+		"url":"/carts/",
+		"type":"GET",
+		"data":"page="+page,
+		"dataType":"json",
+		"success":function(json) {
+			if (json.state == 200) {
+				var list = json.data;
+				$("#cart-list").empty();
+				for (var i = 0; i < list.length; i++) {
+					console.log(list[i].title);
+					var html = '<tr>'
+						+ '<td><input name="cids" value="#{cid}" onclick="selectGoods()" type="checkbox" class="ckitem" /></td>'
+						+ '<td><img src="..#{image}collect.png" width="110" /></td>'
+						+ '<td>#{title}</td>'
+						+ '<td>¥<span id="price-#{cid}">#{price}</span></td>'
+						+ '<td>'
+						+ '<input type="button" value="-" class="num-btn" onclick="subNum(#{cid})" />'
+						+ '<input id="num-#{cid}" type="text" size="2" readonly="readonly" class="num-text" value="#{num}">'
+						+ '<input class="num-btn" type="button" value="+" onclick="addNum(#{cid})" />'
+						+ '</td>'
+						+ '<td>¥<span id="total-price-#{cid}">#{totalPrice}</span></td>'
+						+ '<td><input type="button" onclick="delCartItem(this)" class="cart-del btn btn-default btn-xs" value="删除"/></td>'
+						+ '</tr>';
+
+					html = html.replace(/#{cid}/g, list[i].cid);
+					html = html.replace(/#{image}/g, list[i].image);
+					html = html.replace(/#{title}/g, list[i].title);
+					html = html.replace(/#{price}/g, list[i].price);
+					html = html.replace(/#{num}/g, list[i].num);
+					html = html.replace(/#{totalPrice}/g, list[i].price * list[i].num);
+
+					$("#cart-list").append(html);
+				}
+				var  totalPage=Math.ceil(parseFloat(json.count)/4.0);
+
+				console.log("totalPage"+totalPage)
+				var options={
+					bootstrapMajorVersion:1, //版本
+					currentPage:page, //当前页数
+					numberOfPages:5, //最多显示Page页
+					totalPages:totalPage, //所有数据可以显示的页数
+					onPageClicked:function(e,originalEvent,type,page){
+						console.log("e");
+						console.log(e);
+						console.log("originalEvent");
+						console.log(originalEvent);
+						console.log("type");
+						console.log(type);
+						console.log("page");
+						console.log(page);
+						replaceParamVal("page",page);
+					},
+				}
+				$("#pagehtml").bootstrapPaginator(options);
+			} else {
+				alert(json.message);
+			}
+		}
+	});
+}
+function addNum(cid) {
+	$.ajax({
+		"url":"/carts/" + cid + "/add_num",
+		"type":"POST",
+		"dataType":"json",
+		"success":function(json) {
+			if (json.state == 200) {
+				// showCartList();
+				var n = parseInt($("#num-" + cid).val()) + 1;
+				$("#num-" + cid).val(n);
+				var tp = parseInt($("#price-" + cid).html()) * n;
+				$("#total-price-" + cid).html(tp);
+			} else {
+				alert(json.message);
+			}
+		},
+		"error":function() {
+			alert("您的登录信息已经过期，请重新登录！");
+			location.href = "login.html";
+		}
+	});
+}
+
+function subNum(cid) {
+	$.ajax({
+		"url":"/carts/" + cid + "/sub_num",
+		"type":"POST",
+		"dataType":"json",
+		"success":function(json) {
+			if (json.state == 200) {
+				// showCartList();
+				var n = parseInt($("#num-" + cid).val()) - 1;
+				$("#num-" + cid).val(n);
+				var tp = parseInt($("#price-" + cid).html()) * n;
+				$("#total-price-" + cid).html(tp);
+			} else {
+				alert(json.message);
+			}
+		},
+		"error":function() {
+			alert("您的登录信息已经过期，请重新登录！");
+			location.href = "login.html";
+		}
+	});
+}
+
+

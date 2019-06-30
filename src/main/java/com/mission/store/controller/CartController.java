@@ -2,7 +2,7 @@ package com.mission.store.controller;
 
 import com.mission.store.entity.Cart;
 import com.mission.store.service.ICartService;
-import com.mission.store.util.CalcPage;
+import com.mission.store.util.CalcPageUtil;
 import com.mission.store.util.ResponseResult;
 import com.mission.store.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +72,7 @@ public class CartController extends BaseController {
 		// 从session中获取uid
 		Integer uid = getUidFromSession(session);
 		// 执行：service.addToCart(username, cart);
-		Integer index = CalcPage.getIndex(page, 4);
+		Integer index = CalcPageUtil.getIndex(page, 4);
 		List<CartVO> data = cartService.getByUid(uid,index);
 		Integer count=cartService.countByUid(uid);
 		ResponseResult<List<CartVO>> result = new ResponseResult<>(SUCCESS, data);

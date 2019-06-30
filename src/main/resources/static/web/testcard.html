@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>卡片式</title>
+    <!--导入核心文件-->
+    <script src="../bootstrap3/js/holder.js"></script>
+    <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+    <script src="../bootstrap3/js/bootstrap.js"></script>
+    <script src="../js/getParams.js"></script>
+    <script src="../bootstrap3/js/bootstrap-paginator.js"></script>
+
+
+    <!-- 字体图标 -->
+    <link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../css/layout.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
+    <link rel="stylesheet" type="text/css" href="../css/cart.css" />
+    <style>
+        #div01{
+            width: 90%;
+            height: 700px;
+            border: 1px solid;
+            margin: auto;
+        }
+        .divx{
+            width: 20%;
+            height: 220px;
+
+            float: left;
+            margin-left: 30px;
+            margin-top: 20px;
+            text-align: center;
+            border: 1px solid#eeeeee;
+            box-shadow: 0px 0px 0px #888888;
+            padding: 3px;
+            padding-bottom: 10px;
+        }
+        font{
+            font-weight: normal;
+            line-height: 1;
+            color: #777;
+        }
+
+    </style>
+</head>
+<body>
+<div id="div01">
+    <div class="divx">
+        <img src="../images/portal/14LenovoYOGA710 _gold/collect.png" width="97%" height="70%">
+        <br>
+        <font >
+            联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑
+        </font>
+        <br>
+        <input type="button" value="取消收藏">
+        <input type="button" value="加入购物车">
+    </div>
+
+    <div class="divx">
+        <img src="../images/portal/14LenovoYOGA710 _gold/collect.png" width="97%" height="70%">
+        <br>
+        <h4>¥3398.00</h4>
+        <font >
+            联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑
+        </font>
+        <br>
+        <input type="button" value="取消收藏">
+        <input type="button" value="加入购物车">
+    </div>
+
+    <div class="divx">
+        <img src="../images/portal/14LenovoYOGA710 _gold/collect.png" width="97%" height="70%">
+        <br>
+        <font >
+            联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑
+        </font>
+        <br>
+        <input type="button" value="取消收藏">
+        <input type="button" value="加入购物车">
+    </div>
+    <div class="divx">
+        <img src="../images/portal/14LenovoYOGA710 _gold/collect.png" width="97%" height="70%">
+        <br>
+        <font >
+            联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑
+        </font>
+        <br>
+        <input type="button" value="取消收藏">
+        <input type="button" value="加入购物车">
+    </div>
+</div>
+<div id="pagehtml"></div>
+<script type="text/javascript">
+    var page=1;
+    $(document).ready(function() {
+        if ($.query.get("page")) {
+            page = $.query.get("page");
+        }else {
+            insertParam("page",1);
+        }
+        showList();
+    });
+    function showList() {
+        $.ajax({
+            "url":"/collection/"+page,
+            "type":"GET",
+            "dataType":"json",
+            "success":function(json) {
+                if (json.state == 200) {
+                    var list = json.data;
+                    $("#div01").empty();
+                    for (var i = 0; i < list.length; i++) {
+                        console.log(list[i].title);
+                        var html = '<div class="divx">\n' +
+                            '                            <img src="#{image}/collect.png" width="97%" height="70%">\n' +
+                            '                            <br>\n' +
+                                '<h4>¥#{price}</h4>'+
+                            '                            <font >\n' +
+                            '                            #{title}' +
+                            '                        </font>\n' +
+                            '                        <br>\n' +
+                            '                        <input type="button" value="取消收藏">\n' +
+                            '                            <input type="button" value="加入购物车">\n' +
+                            '                            </div>';
+                        html = html.replace(/#{cid}/g, list[i].cid);
+                        html = html.replace(/#{image}/g, list[i].image);
+                        html = html.replace(/#{title}/g, list[i].title);
+                        html = html.replace(/#{price}/g, list[i].price);
+
+                        $('#div01').append(html)
+                    }
+                    var  totalPage=Math.ceil(parseFloat(json.count)/16.0);
+
+                    console.log("totalPage"+totalPage)
+                    var options={
+                        bootstrapMajorVersion:1, //版本
+                        currentPage:page, //当前页数
+                        numberOfPages:5, //最多显示Page页
+                        totalPages:totalPage, //所有数据可以显示的页数
+                        onPageClicked:function(e,originalEvent,type,page){
+                            console.log("e");
+                            console.log(e);
+                            console.log("originalEvent");
+                            console.log(originalEvent);
+                            console.log("type");
+                            console.log(type);
+                            console.log("page");
+                            console.log(page);
+                            replaceParamVal("page",page);
+                        },
+                    }
+                    $("#pagehtml").bootstrapPaginator(options);
+                } else {
+                    alert(json.message);
+                }
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>
