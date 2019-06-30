@@ -42,7 +42,23 @@ public class CollectionController  extends BaseController{
     // 将uid封装到cart中
     Integer index = CalcPageUtil.getIndex(page, 12);
     List<CollectionVO> list = collectionService.list(uid, index);
-    return new  ResponseResult<>(SUCCESS,list);
+    Integer count = collectionService.countByUid(uid);
+    ResponseResult<List<CollectionVO>> result = new ResponseResult<>(SUCCESS, list);
+    result.setCount(count);
+    return result;
   }
 
+  @PostMapping("/del")
+  public ResponseResult del( Integer id, HttpSession session){
+
+
+    collectionService.deleteById(id);
+    System.out.println("删除成功");
+    return new  ResponseResult<>(SUCCESS);
+  }
+
+
 }
+
+
+

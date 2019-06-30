@@ -31,4 +31,16 @@ public class CollectionService implements ICollectionService {
   public List<CollectionVO> list(Integer uid, Integer index) {
     return collectionMapper.list(uid,index);
   }
+
+  @Override
+  public Integer countByUid(Integer uid) {
+    return collectionMapper.countByUid(uid);
+  }
+
+  @Override
+  public Integer deleteById(Integer id) {
+    return collectionMapper.deleteById(id);
+  }
+
+
 }

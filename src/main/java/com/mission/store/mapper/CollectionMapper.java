@@ -2,6 +2,7 @@ package com.mission.store.mapper;
 
 import com.mission.store.entity.Collection;
 import com.mission.store.vo.CollectionVO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -30,4 +31,19 @@ public interface CollectionMapper {
       "t_collection.modified_time DESC, cid DESC " +
       "LIMIT #{index},12")
   List<CollectionVO> list(Integer uid, Integer index);
+
+  @Select("select  count(*) " +
+      "  FROM " +
+      "      t_collection " +
+      "  LEFT JOIN " +
+      "  t_goods " +
+      "      ON " +
+      "  t_collection.gid=t_goods.id " +
+      "      WHERE " +
+      "  uid=#{uid} ")
+  Integer countByUid(Integer uid);
+
+  @Delete("delete from t_collection where  cid =#{cid}")
+  Integer deleteById(Integer cid);
+
 }
