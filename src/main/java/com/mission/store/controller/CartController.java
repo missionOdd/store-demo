@@ -6,10 +6,7 @@ import com.mission.store.util.CalcPageUtil;
 import com.mission.store.util.ResponseResult;
 import com.mission.store.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -90,7 +87,19 @@ public class CartController extends BaseController {
 		// 返回
 		return new ResponseResult<>(SUCCESS, data);
 	}
-	
+
+
+
+	@PostMapping("/del")
+	public ResponseResult del(
+			Long id) {
+		// 执行
+	 cartService.deleteById(id);
+
+		// 返回
+		return new ResponseResult<>(SUCCESS);
+	}
+
 }
 
 

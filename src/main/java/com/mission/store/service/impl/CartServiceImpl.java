@@ -119,6 +119,11 @@ public class CartServiceImpl implements ICartService {
 		return findByCids(cids);
 	}
 
+	@Override
+	public Integer deleteById(Long cid) {
+		return cartMapper.deleteById(cid);
+	}
+
 	/**
 	 * 插入购物车数据
 	 * @param cart 购物车数据

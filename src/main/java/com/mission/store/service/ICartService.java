@@ -55,7 +55,9 @@ public interface ICartService {
 	 * @return 购物车数据列表
 	 */
 	List<CartVO> getByCids(Integer[] cids);
-	
+
+
+	Integer deleteById(Long cid);
 }
 
 

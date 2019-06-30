@@ -2,6 +2,7 @@ package com.mission.store.mapper;
 
 import com.mission.store.entity.Cart;
 import com.mission.store.vo.CartVO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -65,7 +66,9 @@ public interface CartMapper {
 	 * @return 购物车数据列表
 	 */
 	List<CartVO> findByCids(Integer[] cids);
-	
+
+	@Delete("delete from t_cart where cid=#{cid}")
+	Integer deleteById(Long cid);
 }
 
 

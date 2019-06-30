@@ -19,8 +19,25 @@ function checkall(ckbtn) {
 	calcTotal();
 }
 //删除按钮
-function delCartItem(btn) {
-	
+function delCartItem(btn,id) {
+	$.ajax({
+		"url":"/carts/del",
+		"data":"id=" + id  ,
+		"type":"POST",
+		"dataType":"json",
+		"success":function(json) {
+			if (json.state == 200) {
+				alert("取消成功！");
+				location.reload();
+			} else {
+				alert(json.message);
+			}
+		},
+		"error":function() {
+			alert("您还没有登录，或登录信息已经过期，请重新登录！");
+			location.href = "login.html";
+		}
+	});
 	$(btn).parents("tr").remove();
 	calcTotal();
 }
@@ -137,7 +154,7 @@ function showCartList() {
 						+ '<input class="num-btn" type="button" value="+" onclick="addNum(#{cid})" />'
 						+ '</td>'
 						+ '<td>¥<span id="total-price-#{cid}">#{totalPrice}</span></td>'
-						+ '<td><input type="button" onclick="delCartItem(this)" class="cart-del btn btn-default btn-xs" value="删除"/></td>'
+						+ '<td><input type="button" onclick="delCartItem(this,#{cid})" class="cart-del btn btn-default btn-xs" value="删除"/></td>'
 						+ '</tr>';
 
 					html = html.replace(/#{cid}/g, list[i].cid);
