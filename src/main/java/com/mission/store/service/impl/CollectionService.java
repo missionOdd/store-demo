@@ -28,13 +28,13 @@ public class CollectionService implements ICollectionService {
   }
 
   @Override
-  public List<CollectionVO> list(Integer uid, Integer index) {
-    return collectionMapper.list(uid,index);
+  public List<CollectionVO> list(Integer uid, Integer index, String search, Long greatprice, Long lessprice){
+    return collectionMapper.list(uid,index,search,greatprice,lessprice);
   }
 
   @Override
-  public Integer countByUid(Integer uid) {
-    return collectionMapper.countByUid(uid);
+  public Integer countByUid(Integer uid, String search, Long greatprice, Long lessprice) {
+    return collectionMapper.countByUid(uid,search,greatprice,lessprice);
   }
 
   @Override

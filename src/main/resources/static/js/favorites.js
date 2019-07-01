@@ -23,12 +23,18 @@ $(document).ready(function() {
 	}else {
 		insertParam("page",1);
 	}
+	$('#pagenum').val(page);
 	showList();
 });
 function showList() {
+	var search=$('#search').val();
+	var greatprice=$('#greatprice').val();
+	var lessprice=$('#lessprice').val();
+
 	$.ajax({
 		"url":"/collection/"+page,
 		"type":"GET",
+		'data':"search="+search+"&greatprice="+greatprice+"&lessprice="+lessprice,
 		"dataType":"json",
 		"success":function(json) {
 			if (json.state == 200) {

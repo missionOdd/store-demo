@@ -34,15 +34,19 @@ public class CollectionController  extends BaseController{
     return new  ResponseResult<>(SUCCESS);
   }
   @GetMapping("/{page}")
-  public ResponseResult page(@PathVariable("page") Integer page, HttpSession session){
+  public ResponseResult page(@PathVariable("page") Integer page,
+                             @RequestParam(required = false) String search,
+                             @RequestParam(required = false) Long greatprice,
+                             @RequestParam(required = false) Long lessprice,
+                             HttpSession session){
 
     Integer uid = getUidFromSession(session);
     // 从session中获取username
     String username = session.getAttribute("username").toString();
     // 将uid封装到cart中
     Integer index = CalcPageUtil.getIndex(page, 12);
-    List<CollectionVO> list = collectionService.list(uid, index);
-    Integer count = collectionService.countByUid(uid);
+    List<CollectionVO> list = collectionService.list(uid, index,search,greatprice,lessprice);
+    Integer count = collectionService.countByUid(uid,search,greatprice,lessprice);
     ResponseResult<List<CollectionVO>> result = new ResponseResult<>(SUCCESS, list);
     result.setCount(count);
     return result;

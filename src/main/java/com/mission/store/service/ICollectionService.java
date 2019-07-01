@@ -13,9 +13,9 @@ public interface ICollectionService {
 
   int add(Collection collection);
 
-  List<CollectionVO> list(Integer uid, Integer index);
+  List<CollectionVO> list(Integer uid, Integer index, String search, Long greatprice, Long lessprice);
 
-  Integer countByUid(Integer uid);
+  Integer countByUid(Integer uid,String search, Long greatprice, Long lessprice);
 
   Integer deleteById(Integer cid);
 }
