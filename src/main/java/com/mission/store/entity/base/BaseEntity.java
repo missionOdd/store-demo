@@ -1,8 +1,6 @@
 package com.mission.store.entity.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -14,8 +12,6 @@ import java.util.Date;
  * @author mission
  * @date 2019/6/6 14:19
  */
-@Getter
-@Setter
 @MappedSuperclass
 @EntityListeners(EntityListener.class)
 @Access(AccessType.FIELD)
@@ -66,5 +62,45 @@ public abstract class BaseEntity<T> implements Serializable {
 
   public  void setIsDelete(Integer isDelete) {
     this.isDelete = isDelete;
+  }
+
+  public String getCreatedUser() {
+    return createdUser;
+  }
+
+  public void setCreatedUser(String createdUser) {
+    this.createdUser = createdUser;
+  }
+
+  public Date getCreatedTime() {
+    return createdTime;
+  }
+
+  public void setCreatedTime(Date createdTime) {
+    this.createdTime = createdTime;
+  }
+
+  public String getModifiedUser() {
+    return modifiedUser;
+  }
+
+  public void setModifiedUser(String modifiedUser) {
+    this.modifiedUser = modifiedUser;
+  }
+
+  public Date getModifiedTime() {
+    return modifiedTime;
+  }
+
+  public void setModifiedTime(Date modifiedTime) {
+    this.modifiedTime = modifiedTime;
+  }
+
+  public Long getVersion() {
+    return version;
+  }
+
+  public void setVersion(Long version) {
+    this.version = version;
   }
 }

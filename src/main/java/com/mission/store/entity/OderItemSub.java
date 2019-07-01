@@ -1,16 +1,12 @@
 package com.mission.store.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
 /**
  * @author mission
  * @date 2019/06/27 8:57
  */
-@Getter
-@Setter
+
 @Entity
 @Table(name = "t_order_item_sub")
 public class OderItemSub {
@@ -22,4 +18,28 @@ public class OderItemSub {
   private Integer orderItemId;
 
   private String image;
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public Integer getOrderItemId() {
+    return orderItemId;
+  }
+
+  public void setOrderItemId(Integer orderItemId) {
+    this.orderItemId = orderItemId;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
 }

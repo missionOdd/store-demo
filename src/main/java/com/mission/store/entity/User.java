@@ -1,8 +1,6 @@
 package com.mission.store.entity;
 
 import com.mission.store.entity.base.BaseEntity;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -11,8 +9,7 @@ import javax.persistence.*;
  * @author mission
  * @date 2019/06/24 9:38
  */
-@Getter
-@Setter
+
 @Entity
 @Table(name = "t_user")
 public class User extends BaseEntity {
@@ -61,4 +58,69 @@ public class User extends BaseEntity {
    * 头像
    */
   private String avatar;
+
+
+  public Integer getUid() {
+    return uid;
+  }
+
+  public void setUid(Integer uid) {
+    this.uid = uid;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getSalt() {
+    return salt;
+  }
+
+  public void setSalt(String salt) {
+    this.salt = salt;
+  }
+
+  public Integer getGender() {
+    return gender;
+  }
+
+  public void setGender(Integer gender) {
+    this.gender = gender;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public String getAvatar() {
+    return avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
 }
