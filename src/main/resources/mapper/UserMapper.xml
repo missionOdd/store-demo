@@ -92,7 +92,7 @@
 	<select id="findByUid"
 		resultType="com.mission.store.entity.User">
 		SELECT 
-			username, phone,
+			username, phone,avatar,
 			email, gender,
 			password, salt, 
 			is_delete AS isDelete
